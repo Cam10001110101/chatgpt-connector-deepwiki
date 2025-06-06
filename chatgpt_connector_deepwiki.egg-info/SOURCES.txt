@@ -1,0 +1,8 @@
+README.md
+client.py
+pyproject.toml
+chatgpt_connector_deepwiki.egg-info/PKG-INFO
+chatgpt_connector_deepwiki.egg-info/SOURCES.txt
+chatgpt_connector_deepwiki.egg-info/dependency_links.txt
+chatgpt_connector_deepwiki.egg-info/requires.txt
+chatgpt_connector_deepwiki.egg-info/top_level.txt
