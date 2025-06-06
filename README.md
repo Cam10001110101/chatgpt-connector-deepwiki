@@ -9,3 +9,15 @@ https://platform.openai.com/docs/guides/tools-remote-mcp?lang=python
 
 ### Cloudflare Remove MCP Server Docs
 https://developers.cloudflare.com/agents/guides/remote-mcp-server/#add-authentication
+
+## Quickstart
+
+Install dependencies and start the example OAuth server:
+
+```bash
+cd my-mcp-server-auth
+npm install
+npx wrangler dev
+```
+
+See [`my-mcp-server-auth/README.md`](my-mcp-server-auth/README.md) for full instructions.
