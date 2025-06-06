@@ -1,0 +1,27 @@
+[project]
+name = "chatgpt-connector-deepwiki"
+version = "0.1.0"
+description = "ChatGPT connector for DeepWiki MCP server"
+requires-python = ">=3.8.1"
+dependencies = [
+    "openai>=1.0.0",
+    "python-dotenv>=1.0.0",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+
+[tool.mypy]
+python_version = "3.8.1"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
