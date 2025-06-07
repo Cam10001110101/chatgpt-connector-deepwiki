@@ -1,8 +1,8 @@
-# Model Context Protocol (MCP) Server + Github OAuth
+# DeepWiki GPT MCP Server + Github OAuth
 
-This is a [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) server that supports remote MCP connections, with Github OAuth built-in.
+This is a [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) server for DeepWiki integration with ChatGPT that supports remote MCP connections, with Github OAuth built-in.
 
-You can deploy it to your own Cloudflare account, and after you create your own Github OAuth client app, you'll have a fully functional remote MCP server that you can build off. Users will be able to connect to your MCP server by signing in with their GitHub account.
+You can deploy it to your own Cloudflare account, and after you create your own Github OAuth client app, you'll have a fully functional remote MCP server for DeepWiki GPT integration. Users will be able to connect to your MCP server by signing in with their GitHub account.
 
 You can use this as a reference example for how to integrate other OAuth providers with an MCP server deployed to Cloudflare, using the [`workers-oauth-provider` library](https://github.com/cloudflare/workers-oauth-provider).
 

@@ -60,21 +60,52 @@ export async function fetchUpstreamAuthToken({
     return [null, new Response("Missing code", { status: 400 })];
   }
 
+  console.log("Attempting token exchange with GitHub:", {
+    upstream_url,
+    client_id,
+    redirect_uri,
+    code: code ? "present" : "missing"
+  });
+
   const resp = await fetch(upstream_url, {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
+      "Accept": "application/json"
     },
     body: new URLSearchParams({ client_id, client_secret, code, redirect_uri }).toString(),
   });
+  
+  console.log("GitHub response status:", resp.status);
+  const responseText = await resp.text();
+  console.log("GitHub response body:", responseText);
+  
   if (!resp.ok) {
-    console.log(await resp.text());
-    return [null, new Response("Failed to fetch access token", { status: 500 })];
+    console.error("GitHub token exchange failed:", {
+      status: resp.status,
+      statusText: resp.statusText,
+      body: responseText
+    });
+    return [null, new Response(`Failed to fetch access token: ${resp.status} ${responseText}`, { status: 500 })];
   }
-  const body = await resp.formData();
-  const accessToken = body.get("access_token") as string;
+  let accessToken: string;
+  try {
+    const body = JSON.parse(responseText);
+    accessToken = body.access_token;
+  } catch (parseError) {
+    console.error("Failed to parse GitHub response as JSON, trying as form data");
+    try {
+      const body = new URLSearchParams(responseText);
+      accessToken = body.get("access_token") as string;
+    } catch (formError) {
+      console.error("Failed to parse GitHub response:", { parseError, formError, responseText });
+      return [null, new Response("Invalid response format from GitHub", { status: 500 })];
+    }
+  }
+  
   if (!accessToken) {
-    return [null, new Response("Missing access token", { status: 400 })];
+    console.error("No access token in response:", responseText);
+    return [null, new Response("Missing access token in GitHub response", { status: 400 })];
   }
   return [accessToken, null];
 }

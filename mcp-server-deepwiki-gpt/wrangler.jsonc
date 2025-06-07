@@ -4,21 +4,16 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "my-mcp-server-auth",
+	"name": "mcp-server-deepwiki-gpt",
 	"main": "src/index.ts",
 	"compatibility_date": "2025-03-10",
 	"compatibility_flags": [
 		"nodejs_compat"
 	],
-	"vars": {
-		"GITHUB_CLIENT_ID": "1234567890",
-		"GITHUB_CLIENT_SECRET": "1234567890",
-		"COOKIE_ENCRYPTION_KEY": "1234567890"
-	},
 	"migrations": [
 		{
 			"new_sqlite_classes": [
-				"MyMCP"
+				"DeepWikiGptMCP"
 			],
 			"tag": "v1"
 		}
@@ -26,7 +21,7 @@
 	"durable_objects": {
 		"bindings": [
 			{
-				"class_name": "MyMCP",
+				"class_name": "DeepWikiGptMCP",
 				"name": "MCP_OBJECT"
 			}
 		]
@@ -34,7 +29,7 @@
 	"kv_namespaces": [
 		{
 			"binding": "OAUTH_KV",
-			"id": "<Add-KV-ID>"
+			"id": "9ae66b0863da486d9c00bae1d1353fcb"
 		}
 	],
 	"ai": {
