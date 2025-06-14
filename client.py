@@ -1,4 +1,4 @@
-from openai import OpenAI
+from openai import OpenAI  # type: ignore
 
 client = OpenAI()
 
@@ -12,7 +12,10 @@ resp = client.responses.create(
             "require_approval": "never",
         },
     ],
-    input="What transport protocols are supported in the 2025-03-26 version of the MCP spec?",
+    input=(
+        "What transport protocols are supported in the 2025-03-26 version "
+        "of the MCP spec?"
+    ),
 )
 
 print(resp.output_text)
