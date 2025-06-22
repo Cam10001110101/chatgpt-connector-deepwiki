@@ -1,0 +1,10 @@
+name = "mcp-server-deepwiki-gpt"
+main = "src/index.ts"
+compatibility_date = "2025-03-10"
+compatibility_flags = ["nodejs_compat"]
+
+[dev]
+port = 8788
+
+[observability]
+enabled = true

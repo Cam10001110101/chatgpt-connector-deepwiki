@@ -1,28 +1,31 @@
-# GitHub MCP Server with OAuth
+# DeepWiki MCP Server
 
-A [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) server that provides GitHub repository search and content retrieval capabilities through secure OAuth authentication.
+A [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) server that provides comprehensive documentation and search capabilities for the Model Context Protocol. This server replicates and extends the functionality of the official DeepWiki MCP server.
 
 ## Overview
 
-This MCP server integrates with GitHub to provide:
-- **Repository search**: Search through your GitHub repositories
-- **File content retrieval**: Fetch and read file contents from repositories
-- **OAuth authentication**: Secure access using GitHub OAuth
+This MCP server provides access to comprehensive MCP protocol documentation including:
+- **Protocol documentation**: Complete MCP specification and guides
+- **Architecture details**: Client-server architecture, transport mechanisms
+- **Implementation examples**: Code samples and best practices
+- **Security guidelines**: Authentication, authorization, and security models
+- **Deployment guides**: Production deployment strategies
 
-The server is deployed on [Cloudflare Workers](https://developers.cloudflare.com/workers/) and uses the [`workers-oauth-provider` library](https://github.com/cloudflare/workers-oauth-provider) to handle OAuth flows.
+The server is deployed on [Cloudflare Workers](https://developers.cloudflare.com/workers/) and provides the same interface as the official DeepWiki MCP server at `https://mcp.deepwiki.mcpcentral.io/sse`.
 
 ## Features
 
 ### MCP Tools
 
-1. **`search`** - Search GitHub repositories and files
-   - Searches repositories owned by the authenticated user
-   - Returns repository information and matching files
+1. **`search`** - Search MCP documentation
+   - Full-text search across all MCP documentation
+   - Relevance scoring and ranking
+   - Returns truncated results with titles, excerpts, and URLs
    - Compatible with ChatGPT's MCP search requirements
 
 2. **`fetch`** - Retrieve detailed content
-   - Fetch repository details including README
-   - Retrieve file contents from repositories
+   - Fetch complete document content by ID
+   - Full MCP documentation with examples and code samples
    - Compatible with ChatGPT's MCP fetch requirements
 
 ## Project Structure
@@ -114,7 +117,7 @@ All authenticated GitHub users can access:
 
 The server only provides GitHub repository search and content retrieval functionality. No additional access controls are needed.
 
-## Connecting MCP Clients
+## Client Configuration
 
 ### Claude Desktop
 
@@ -122,10 +125,11 @@ The server only provides GitHub repository search and content retrieval function
 2. Navigate to Settings → Developer → Edit Config
 3. Add your server configuration:
 
+**For Production Deployment:**
 ```json
 {
   "mcpServers": {
-    "github-mcp": {
+    "deepwiki": {
       "command": "npx",
       "args": [
         "mcp-remote",
@@ -136,15 +140,81 @@ The server only provides GitHub repository search and content retrieval function
 }
 ```
 
+**For Local Development:**
+```json
+{
+  "mcpServers": {
+    "deepwiki-local": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "http://localhost:8788/sse"
+      ]
+    }
+  }
+}
+```
+
+**Using Official DeepWiki Server:**
+```json
+{
+  "mcpServers": {
+    "deepwiki-official": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://mcp.deepwiki.mcpcentral.io/sse"
+      ]
+    }
+  }
+}
+```
+
 4. Save and restart Claude Desktop
-5. Complete OAuth authentication when prompted
-6. Look for the tools under the 🔨 icon
+5. Look for the tools under the 🔨 icon
+
+### OpenAI ChatGPT
+
+1. Go to [ChatGPT](https://chatgpt.com/)
+2. Click on your profile → Settings → Beta Features
+3. Enable "Model Context Protocol (MCP)"
+4. In a new chat, click the 📎 attachment icon
+5. Select "Connect to MCP Server"
+6. Enter your server URL:
+
+**For Production Deployment:**
+```
+https://your-worker-name.your-subdomain.workers.dev/sse
+```
+
+**For Local Development:**
+```
+http://localhost:8788/sse
+```
+
+**Using Official DeepWiki Server:**
+```
+https://mcp.deepwiki.mcpcentral.io/sse
+```
+
+7. The server will connect and tools will be available in the chat
 
 ### Other MCP Clients
 
-For clients like Cursor or Windsurf, use the command:
-```
+**Cursor IDE:**
+```bash
 npx mcp-remote https://your-worker-name.your-subdomain.workers.dev/sse
+```
+
+**Windsurf IDE:**
+```bash
+npx mcp-remote https://your-worker-name.your-subdomain.workers.dev/sse
+```
+
+**MCP Inspector (for testing):**
+```bash
+npx @modelcontextprotocol/inspector@latest
+# Then enter: https://your-worker-name.your-subdomain.workers.dev/sse
 ```
 
 ## Local Development
